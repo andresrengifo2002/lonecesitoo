@@ -14,19 +14,19 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.myapplication.Models.PerfilModel;
 import com.example.myapplication.R;
 
-import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Callback;
 
 public class PerfilAdapter extends RecyclerView.Adapter<PerfilAdapter.ViewHolder> {
     private RecyclerView  recyclerView;
     private List<PerfilModel> perfil;
     private Context context;
 
-    public PerfilAdapter(Context context){
-        perfil = new ArrayList<>();
+    public PerfilAdapter(List<PerfilModel> perfil, Context context){
+       this.perfil = perfil;
         this.context = context;
     }
-
 
     @NonNull
     @Override
@@ -39,7 +39,7 @@ public class PerfilAdapter extends RecyclerView.Adapter<PerfilAdapter.ViewHolder
     public void onBindViewHolder(@NonNull PerfilAdapter.ViewHolder holder, int position) {
 
         PerfilModel model = perfil.get(position);
-        holder.tVnameUser.setText(model.getUsername());
+        holder.tVnameUser.setText(model.getPerfil());
         holder.edTcorreo.setText(model.getEmail());
     }
 
@@ -59,10 +59,5 @@ public class PerfilAdapter extends RecyclerView.Adapter<PerfilAdapter.ViewHolder
             edTcorreo = itemView.findViewById(R.id.tVmailUdser);
             edTficha = itemView.findViewById(R.id.tVficha);
         }
-    }
-
-    public void add(ArrayList<PerfilModel> perfil){
-        perfil.addAll(perfil);
-        notifyDataSetChanged();
     }
 }

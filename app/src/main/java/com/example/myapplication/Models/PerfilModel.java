@@ -1,5 +1,6 @@
 package com.example.myapplication.Models;
 
+
 public class PerfilModel {
 
     private int id;
@@ -41,8 +42,8 @@ public class PerfilModel {
     }
 
     public String getPerfil(){
-        String nombreUser = this.first_name + ' ' + this.last_name;
-        return nombreUser;
+        String perfil = this.first_name + ' ' + this.last_name + ' ' + this.email;
+        return perfil;
     }
 
     public void setUsername(String username) {

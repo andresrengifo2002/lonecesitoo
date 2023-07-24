@@ -9,8 +9,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.myapplication.Adapters.PerfilAdapter;
 import com.example.myapplication.Interfaces.ApiUser;
@@ -39,6 +39,8 @@ public class Profile extends AppCompatActivity {
         setContentView(R.layout.activity_profile);
         reference();
         clicks();
+        listarPerfil();
+
     }
 
     private void clicks() {
@@ -47,7 +49,7 @@ public class Profile extends AppCompatActivity {
             public void onClick(View v) {
                 Intent volver = new Intent(Profile.this, MainActivity.class);
                 startActivity(volver);
-                listarPerfil();
+
             }
         });
     }
@@ -61,34 +63,41 @@ public class Profile extends AppCompatActivity {
         btnback = (Button) findViewById(R.id.btnback);
         recyclerPerfil = findViewById(R.id.rcView);
 
-        adapterPerfil = new PerfilAdapter(this);
+        adapterPerfil = new PerfilAdapter(perfilmodel, this);
         recyclerPerfil.setAdapter(adapterPerfil);
         recyclerPerfil.setHasFixedSize(true);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, true);
         recyclerPerfil.setLayoutManager(linearLayoutManager);
+
+        Toast.makeText(this, "Reference complete!", Toast.LENGTH_SHORT).show();
     }
 
     private  void listarPerfil(){
+        Toast.makeText(this, "Get profile", Toast.LENGTH_SHORT).show();
         Retrofit retrofit = new  Retrofit.Builder()
                 .baseUrl("https://lexa2334.pythonanywhere.com/api/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         ApiUser apiUser = retrofit.create(ApiUser.class);
-        Call<List<PerfilModel>> call = apiUser.getProfile("1");
+        Call<PerfilModel> call = apiUser.getProfile("1");
 
-        call.enqueue(new Callback<List<PerfilModel>>() {
+        call.enqueue(new Callback<PerfilModel>() {
             @Override
-            public void onResponse(Call<List<PerfilModel>> call, Response<List<PerfilModel>> response) {
-                Log.e("onResponse", response.body().toString());
-                Log.e("onResponse", response.message().toString());
-                Log.e("onResponse", String.valueOf(response.code()));
+            public void onResponse(Call<PerfilModel> call, Response<PerfilModel> response) {
+                Log.i("onResponse", response.body().toString());
+                Log.i("onResponse", response.message().toString());
+                Log.i("onResponse", String.valueOf(response.code()));
 
-                adapterPerfil.add((ArrayList<PerfilModel>) perfilmodel);
+                Toast.makeText(Profile.this, "respuesta: " + response.body().toString(), Toast.LENGTH_SHORT).show();
+
+                recyclerPerfil.setAdapter(new PerfilAdapter(perfilmodel, this));
+                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(Profile.this, RecyclerView.VERTICAL, true);
             }
 
             @Override
-            public void onFailure(Call<List<PerfilModel>> call, Throwable t) {
-
+            public void onFailure(Call<PerfilModel> call, Throwable t) {
+                Toast.makeText(Profile.this, "Failed" + t, Toast.LENGTH_LONG).show();
+                Log.e("onFail", "Error" + t, t);
             }
         });
     }
