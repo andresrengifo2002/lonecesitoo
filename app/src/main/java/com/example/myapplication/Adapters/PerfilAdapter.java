@@ -16,14 +16,12 @@ import com.example.myapplication.R;
 
 import java.util.List;
 
-import retrofit2.Callback;
-
 public class PerfilAdapter extends RecyclerView.Adapter<PerfilAdapter.ViewHolder> {
     private RecyclerView  recyclerView;
     private List<PerfilModel> perfil;
     private Context context;
 
-    public PerfilAdapter(List<PerfilModel> perfil, Context context){
+    public PerfilAdapter(List<PerfilModel> perfil){
        this.perfil = perfil;
         this.context = context;
     }

@@ -63,7 +63,7 @@ public class Profile extends AppCompatActivity {
         btnback = (Button) findViewById(R.id.btnback);
         recyclerPerfil = findViewById(R.id.rcView);
 
-        adapterPerfil = new PerfilAdapter(perfilmodel, this);
+        adapterPerfil = new PerfilAdapter(perfilmodel);
         recyclerPerfil.setAdapter(adapterPerfil);
         recyclerPerfil.setHasFixedSize(true);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, true);
@@ -90,7 +90,7 @@ public class Profile extends AppCompatActivity {
 
                 Toast.makeText(Profile.this, "respuesta: " + response.body().toString(), Toast.LENGTH_SHORT).show();
 
-                recyclerPerfil.setAdapter(new PerfilAdapter(perfilmodel, this));
+                recyclerPerfil.setAdapter(new PerfilAdapter(perfilmodel));
                 LinearLayoutManager linearLayoutManager = new LinearLayoutManager(Profile.this, RecyclerView.VERTICAL, true);
             }
 
@@ -101,4 +101,5 @@ public class Profile extends AppCompatActivity {
             }
         });
     }
+
 }
