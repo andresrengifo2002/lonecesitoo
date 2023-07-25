@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+    android:layout_width="300dp"
+    android:layout_gravity="center_horizontal"
     android:layout_height="wrap_content">
 
     <LinearLayout
@@ -14,10 +15,11 @@
             android:id="@+id/tVnameUser"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
             android:layout_gravity="center"
             android:drawablePadding="5dp"
-            android:textSize="20sp"
-            android:text="Nombre usuario" />
+            android:text="Nombre usuario"
+            android:textSize="20sp" />
 
         <ImageView
             android:id="@+id/imgUser"
@@ -27,40 +29,35 @@
             android:src="@drawable/usuario" />
 
         <TextView
-            android:id="@+id/text2"
             android:layout_width="wrap_content"
             android:layout_height="30dp"
             android:text="Correo"
             android:textColor="@color/black"
+            android:layout_gravity="center"
             android:textSize="20sp"
             android:textStyle="bold" />
-
-        <EditText
-            android:id="@+id/tVmailUdser"
-            android:layout_width="wrap_content"
-            android:layout_height="39dp"
-            android:layout_gravity="center_horizontal"
-            android:ems="10"
-            android:inputType="textEmailAddress"
-            android:text="anarios220@gmail.com" />
 
         <TextView
-            android:id="@+id/text3"
+            android:id="@+id/tVmail"
             android:layout_width="wrap_content"
-            android:layout_height="32dp"
-            android:text="Ficha"
-            android:textColor="@color/black"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+            android:layout_height="30dp"
+            android:layout_gravity="center"
+            android:text="Correo" />
 
-        <EditText
-            android:id="@+id/tVficha"
+        <TextView
             android:layout_width="wrap_content"
-            android:layout_height="38dp"
-            android:layout_gravity="center_horizontal"
-            android:ems="10"
-            android:inputType="textEmailAddress"
-            android:padding="8dp"
-            android:text="2427882" />
+            android:layout_height="wrap_content"
+            android:text="Nombre completo"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_gravity="center"/>
+
+        <TextView
+            android:id="@+id/tVFullName"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_gravity="center"
+            android:text="Nombre completo" />
+
     </LinearLayout>
 </androidx.cardview.widget.CardView>

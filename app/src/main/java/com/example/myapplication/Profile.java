@@ -1,6 +1,7 @@
 package com.example.myapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -26,12 +27,10 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Profile extends AppCompatActivity {
-
-    private TextView T1, T2, T3;
     private Button btnback;
-    private RecyclerView recyclerPerfil;
-    private List<PerfilModel> perfilmodel;
-    private  PerfilAdapter adapterPerfil;
+    private RecyclerView recyclerView;
+    private RecyclerView.Adapter<PerfilAdapter.ViewHolder> adapter;
+    private List<PerfilModel> perfilList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +39,6 @@ public class Profile extends AppCompatActivity {
         reference();
         clicks();
         listarPerfil();
-
     }
 
     private void clicks() {
@@ -49,49 +47,39 @@ public class Profile extends AppCompatActivity {
             public void onClick(View v) {
                 Intent volver = new Intent(Profile.this, MainActivity.class);
                 startActivity(volver);
-
             }
         });
     }
 
     private void reference() {
-        T2 = findViewById(R.id.text2);
-        Intent intent = getIntent();
-        //String accessT = intent.getStringExtra("token");
-        //T2.setText(accessT);
-        T2 = (TextView) findViewById(R.id.text2);
         btnback = (Button) findViewById(R.id.btnback);
-        recyclerPerfil = findViewById(R.id.rcView);
-
-        adapterPerfil = new PerfilAdapter(perfilmodel);
-        recyclerPerfil.setAdapter(adapterPerfil);
-        recyclerPerfil.setHasFixedSize(true);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, true);
-        recyclerPerfil.setLayoutManager(linearLayoutManager);
-
-        Toast.makeText(this, "Reference complete!", Toast.LENGTH_SHORT).show();
+        recyclerView = findViewById(R.id.rcView);
     }
 
     private  void listarPerfil(){
-        Toast.makeText(this, "Get profile", Toast.LENGTH_SHORT).show();
         Retrofit retrofit = new  Retrofit.Builder()
                 .baseUrl("https://lexa2334.pythonanywhere.com/api/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         ApiUser apiUser = retrofit.create(ApiUser.class);
-        Call<PerfilModel> call = apiUser.getProfile("1");
+        Call<PerfilModel> call = apiUser.getProfile("2");
 
         call.enqueue(new Callback<PerfilModel>() {
             @Override
             public void onResponse(Call<PerfilModel> call, Response<PerfilModel> response) {
-                Log.i("onResponse", response.body().toString());
-                Log.i("onResponse", response.message().toString());
-                Log.i("onResponse", String.valueOf(response.code()));
+                PerfilModel perfil = new PerfilModel();
+                perfil.setId(response.body().getId());
+                perfil.setUsername(response.body().getUsername());
+                perfil.setFirst_name(response.body().getFirst_name());
+                perfil.setLast_name(response.body().getLast_name());
+                perfil.setEmail(response.body().getEmail());
 
-                Toast.makeText(Profile.this, "respuesta: " + response.body().toString(), Toast.LENGTH_SHORT).show();
+                perfilList = new ArrayList<>();
+                perfilList.add(perfil);
 
-                recyclerPerfil.setAdapter(new PerfilAdapter(perfilmodel));
-                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(Profile.this, RecyclerView.VERTICAL, true);
+                recyclerView.setLayoutManager(new LinearLayoutManager(Profile.this));
+                adapter = new PerfilAdapter(perfilList);
+                recyclerView.setAdapter(adapter);
             }
 
             @Override
@@ -101,5 +89,4 @@ public class Profile extends AppCompatActivity {
             }
         });
     }
-
 }

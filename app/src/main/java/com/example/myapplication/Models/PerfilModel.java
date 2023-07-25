@@ -1,6 +1,5 @@
 package com.example.myapplication.Models;
 
-
 public class PerfilModel {
 
     private int id;
@@ -15,6 +14,10 @@ public class PerfilModel {
         this.first_name = first_name;
         this.last_name = last_name;
         this.email = email;
+    }
+
+    public PerfilModel() {
+
     }
 
     public int getId() {
@@ -33,17 +36,14 @@ public class PerfilModel {
         return last_name;
     }
 
+    public String getFullName() { return first_name + ' ' + last_name;}
+
     public String getEmail() {
         return email;
     }
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public String getPerfil(){
-        String perfil = this.first_name + ' ' + this.last_name + ' ' + this.email;
-        return perfil;
     }
 
     public void setUsername(String username) {
@@ -64,12 +64,10 @@ public class PerfilModel {
 
     @Override
     public String toString() {
-        return "PerfilModel{" +
-                "id=" + id +
-                ", username='" + username +
-                ", first_name='" + first_name +
-                ", last_name='" + last_name +
-                ", email='" + email +
-                '}';
+        return "id= " + id +
+                "username= " + username +
+                "first_name= " + first_name +
+                "last_name " + last_name +
+                "email= " + email;
     }
 }
